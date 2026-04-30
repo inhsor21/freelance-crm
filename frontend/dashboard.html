@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FreelanceCRM – Dashboard</title>
+</head>
+<body>
+
+  <h1>FreelanceCRM Dashboard</h1>
+  <button onclick="logout()">Logout</button>
+
+  <h2>Overview</h2>
+  <div id="analytics">
+    <span>Total: <b id="total">0</b></span> |
+    <span>New: <b id="newLeads">0</b></span> |
+    <span>Contacted: <b id="contacted">0</b></span> |
+    <span>Converted: <b id="converted">0</b></span> |
+    <span>Conversion Rate: <b id="conversionRate">0</b>%</span>
+  </div>
+
+  <h2>Leads</h2>
+  <input type="text" id="search" placeholder="Search by name or email" oninput="fetchLeads()" />
+  <select id="statusFilter" onchange="fetchLeads()">
+    <option value="">All Statuses</option>
+    <option value="new">New</option>
+    <option value="contacted">Contacted</option>
+    <option value="converted">Converted</option>
+  </select>
+
+  <h2>Add New Lead</h2>
+  <div>
+    <input type="text" id="newName" placeholder="Name" />
+    <input type="email" id="newEmail" placeholder="Email" />
+    <input type="text" id="newPhone" placeholder="Phone" />
+    <input type="text" id="newService" placeholder="Service (e.g. Website Design)" />
+    <input type="text" id="newSource" placeholder="Source (e.g. Contact Form)" />
+    <button onclick="addLead()">Add Lead</button>
+  </div>
+
+  <h2>All Leads</h2>
+  <table border="1" id="leadsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Service</th>
+        <th>Source</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="leadsBody"></tbody>
+  </table>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

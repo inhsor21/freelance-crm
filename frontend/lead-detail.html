@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FreelanceCRM – Lead Detail</title>
+</head>
+<body>
+
+  <a href="dashboard.html">← Back to Dashboard</a>
+  <h1 id="leadName">Loading...</h1>
+
+  <h2>Lead Info</h2>
+  <p>Email: <b id="leadEmail"></b></p>
+  <p>Phone: <b id="leadPhone"></b></p>
+  <p>Service: <b id="leadService"></b></p>
+  <p>Source: <b id="leadSource"></b></p>
+  <p>Date: <b id="leadDate"></b></p>
+
+  <h2>Status</h2>
+  <select id="statusSelect">
+    <option value="new">New</option>
+    <option value="contacted">Contacted</option>
+    <option value="converted">Converted</option>
+  </select>
+  <button onclick="updateStatus()">Update Status</button>
+  <p id="statusMsg" style="color:green;"></p>
+
+  <h2>Notes</h2>
+  <div id="notesList"></div>
+  <br/>
+  <textarea id="newNote" rows="3" cols="40" placeholder="Add a follow-up note..."></textarea>
+  <br/>
+  <button onclick="addNote()">Add Note</button>
+
+  <script src="js/lead-detail.js"></script>
+</body>
+</html>
