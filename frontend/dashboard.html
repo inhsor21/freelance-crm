@@ -74,28 +74,28 @@
       </div>
 
       <!-- Add Lead Form (hidden by default) -->
-      <div class="form-card" id="addForm" style="display:none;">
+      <div class="form-card" id="addForm" style="display:none;" autocomplete="off">
         <div class="section-title" style="margin-bottom:1rem;">New Lead</div>
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">Name</label>
-            <input class="form-input" type="text" id="newName" placeholder="Jane Smith" />
+            <input class="form-input" type="text" id="newName" placeholder="Jane Smith" autocomplete="off" />
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input class="form-input" type="email" id="newEmail" placeholder="jane@example.com" />
+            <input class="form-input" type="email" id="newEmail" placeholder="jane@example.com" autocomplete="off" />
           </div>
           <div class="form-group">
             <label class="form-label">Phone</label>
-            <input class="form-input" type="text" id="newPhone" placeholder="+1 234 567 890" />
+            <input class="form-input" type="text" id="newPhone" placeholder="+1 234 567 890" autocomplete="off" />
           </div>
           <div class="form-group">
             <label class="form-label">Service</label>
-            <input class="form-input" type="text" id="newService" placeholder="Website Design" />
+            <input class="form-input" type="text" id="newService" placeholder="Website Design" autocomplete="off" />
           </div>
           <div class="form-group">
             <label class="form-label">Source</label>
-            <input class="form-input" type="text" id="newSource" placeholder="Contact Form" />
+            <input class="form-input" type="text" id="newSource" placeholder="Contact Form" autocomplete="off" />
           </div>
         </div>
         <button class="btn-primary" onclick="addLead()">Add Lead →</button>
@@ -106,7 +106,7 @@
         <div class="section-head">
           <div class="section-title">All Leads</div>
           <div class="controls">
-            <input class="search-input" type="text" id="search" placeholder="Search by name or email..." oninput="fetchLeads()" />
+            <input class="search-input" type="text" id="search" placeholder="Search by name or email..." oninput="fetchLeads()" autocomplete="off" />
             <select class="filter-select" id="statusFilter" onchange="fetchLeads()">
               <option value="">All Statuses</option>
               <option value="new">New</option>
