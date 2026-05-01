@@ -9,10 +9,8 @@ router.get('/', protect, async (req, res) => {
     const { status, search } = req.query;
     let query = {};
 
-    // Filter by status
     if (status) query.status = status;
 
-    // Search by name or email
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
@@ -86,6 +84,21 @@ router.post('/:id/notes', protect, async (req, res) => {
 
     lead.notes.push({ text: req.body.text });
     await lead.save();
+    res.json(lead);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// @PUT /api/leads/:id - Update lead details
+router.put('/:id', protect, async (req, res) => {
+  try {
+    const lead = await Lead.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!lead) return res.status(404).json({ message: 'Lead not found' });
     res.json(lead);
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });

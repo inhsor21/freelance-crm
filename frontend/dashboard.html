@@ -4,55 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FreelanceCRM – Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <h1>FreelanceCRM Dashboard</h1>
-  <button onclick="logout()">Logout</button>
+  <div class="layout">
 
-  <h2>Overview</h2>
-  <div id="analytics">
-    <span>Total: <b id="total">0</b></span> |
-    <span>New: <b id="newLeads">0</b></span> |
-    <span>Contacted: <b id="contacted">0</b></span> |
-    <span>Converted: <b id="converted">0</b></span> |
-    <span>Conversion Rate: <b id="conversionRate">0</b>%</span>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sb-blob1"></div>
+      <div class="sb-blob2"></div>
+      <div class="sb-top">
+        <div class="logo-tag">✦ your workspace</div>
+        <div class="logo">freelance<em>CRM</em></div>
+        <nav class="nav">
+          <a href="dashboard.html" class="nav-item active">
+            <div class="nav-icon">⊞</div>Dashboard
+          </a>
+          <a href="#leads" class="nav-item">
+            <div class="nav-icon">◈</div>Leads
+          </a>
+        </nav>
+      </div>
+      <div class="sb-foot">
+        <div class="admin-chip">admin@freelancecrm.com</div>
+        <br/><br/>
+        <button class="btn-primary" onclick="logout()" style="width:100%;border-radius:12px;">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="greeting">
+          Good morning ˚✦
+          <small>Here's your lead overview for today.</small>
+        </div>
+        <button class="btn-primary" onclick="toggleAddForm()">＋ Add Lead</button>
+      </div>
+
+      <!-- Analytics -->
+      <div class="stats">
+        <div class="stat s1">
+          <div class="stat-blob"></div>
+          <div class="stat-lbl">Total Leads</div>
+          <div class="stat-val" id="total">0</div>
+          <div class="stat-sub">all time</div>
+        </div>
+        <div class="stat s2">
+          <div class="stat-blob"></div>
+          <div class="stat-lbl">New</div>
+          <div class="stat-val" id="newLeads">0</div>
+          <div class="stat-sub">awaiting contact</div>
+        </div>
+        <div class="stat s3">
+          <div class="stat-blob"></div>
+          <div class="stat-lbl">Contacted</div>
+          <div class="stat-val" id="contacted">0</div>
+          <div class="stat-sub">in progress</div>
+        </div>
+        <div class="stat s4">
+          <div class="stat-blob"></div>
+          <div class="stat-lbl">Converted</div>
+          <div class="stat-val" id="converted">0</div>
+          <div class="stat-sub" id="conversionRate">0% rate</div>
+        </div>
+      </div>
+
+      <!-- Add Lead Form (hidden by default) -->
+      <div class="form-card" id="addForm" style="display:none;">
+        <div class="section-title" style="margin-bottom:1rem;">New Lead</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" id="newName" placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" id="newEmail" placeholder="jane@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input class="form-input" type="text" id="newPhone" placeholder="+1 234 567 890" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service</label>
+            <input class="form-input" type="text" id="newService" placeholder="Website Design" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Source</label>
+            <input class="form-input" type="text" id="newSource" placeholder="Contact Form" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="addLead()">Add Lead →</button>
+      </div>
+
+      <!-- Leads Table -->
+      <div id="leads">
+        <div class="section-head">
+          <div class="section-title">All Leads</div>
+          <div class="controls">
+            <input class="search-input" type="text" id="search" placeholder="Search by name or email..." oninput="fetchLeads()" />
+            <select class="filter-select" id="statusFilter" onchange="fetchLeads()">
+              <option value="">All Statuses</option>
+              <option value="new">New</option>
+              <option value="contacted">Contacted</option>
+              <option value="converted">Converted</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Service</th>
+                <th>Source</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="leadsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <h2>Leads</h2>
-  <input type="text" id="search" placeholder="Search by name or email" oninput="fetchLeads()" />
-  <select id="statusFilter" onchange="fetchLeads()">
-    <option value="">All Statuses</option>
-    <option value="new">New</option>
-    <option value="contacted">Contacted</option>
-    <option value="converted">Converted</option>
-  </select>
-
-  <h2>Add New Lead</h2>
-  <div>
-    <input type="text" id="newName" placeholder="Name" />
-    <input type="email" id="newEmail" placeholder="Email" />
-    <input type="text" id="newPhone" placeholder="Phone" />
-    <input type="text" id="newService" placeholder="Service (e.g. Website Design)" />
-    <input type="text" id="newSource" placeholder="Source (e.g. Contact Form)" />
-    <button onclick="addLead()">Add Lead</button>
-  </div>
-
-  <h2>All Leads</h2>
-  <table border="1" id="leadsTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Service</th>
-        <th>Source</th>
-        <th>Status</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="leadsBody"></tbody>
-  </table>
 
   <script src="js/dashboard.js"></script>
 </body>

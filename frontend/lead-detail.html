@@ -4,34 +4,111 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FreelanceCRM – Lead Detail</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <a href="dashboard.html">← Back to Dashboard</a>
-  <h1 id="leadName">Loading...</h1>
+  <div class="layout">
 
-  <h2>Lead Info</h2>
-  <p>Email: <b id="leadEmail"></b></p>
-  <p>Phone: <b id="leadPhone"></b></p>
-  <p>Service: <b id="leadService"></b></p>
-  <p>Source: <b id="leadSource"></b></p>
-  <p>Date: <b id="leadDate"></b></p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sb-blob1"></div>
+      <div class="sb-blob2"></div>
+      <div class="sb-top">
+        <div class="logo-tag">✦ your workspace</div>
+        <div class="logo">freelance<em>CRM</em></div>
+        <nav class="nav">
+          <a href="dashboard.html" class="nav-item">
+            <div class="nav-icon">⊞</div>Dashboard
+          </a>
+          <a href="dashboard.html#leads" class="nav-item active">
+            <div class="nav-icon">◈</div>Leads
+          </a>
+        </nav>
+      </div>
+      <div class="sb-foot">
+        <div class="admin-chip">admin@freelancecrm.com</div>
+        <br/><br/>
+        <button class="btn-primary" onclick="logout()" style="width:100%;border-radius:12px;">Sign Out</button>
+      </div>
+    </div>
 
-  <h2>Status</h2>
-  <select id="statusSelect">
-    <option value="new">New</option>
-    <option value="contacted">Contacted</option>
-    <option value="converted">Converted</option>
-  </select>
-  <button onclick="updateStatus()">Update Status</button>
-  <p id="statusMsg" style="color:green;"></p>
+    <!-- Main -->
+    <div class="main">
 
-  <h2>Notes</h2>
-  <div id="notesList"></div>
-  <br/>
-  <textarea id="newNote" rows="3" cols="40" placeholder="Add a follow-up note..."></textarea>
-  <br/>
-  <button onclick="addNote()">Add Note</button>
+      <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+
+      <!-- Lead Info -->
+      <div class="detail-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <div class="detail-title" style="margin-bottom:0;" id="leadName">Loading...</div>
+          <button class="btn-primary" onclick="toggleEdit()" id="editBtn">Edit Lead</button>
+        </div>
+
+        <!-- View Mode -->
+        <div id="viewMode" class="detail-grid">
+          <div class="detail-field"><label>Email</label><p id="leadEmail"></p></div>
+          <div class="detail-field"><label>Phone</label><p id="leadPhone"></p></div>
+          <div class="detail-field"><label>Service</label><p id="leadService"></p></div>
+          <div class="detail-field"><label>Source</label><p id="leadSource"></p></div>
+          <div class="detail-field"><label>Date Added</label><p id="leadDate"></p></div>
+          <div class="detail-field"><label>Current Status</label><p id="leadStatusBadge"></p></div>
+        </div>
+
+        <!-- Edit Mode -->
+        <div id="editMode" style="display:none;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input class="form-input" type="text" id="editName" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" id="editEmail" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input class="form-input" type="text" id="editPhone" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Service</label>
+              <input class="form-input" type="text" id="editService" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Source</label>
+              <input class="form-input" type="text" id="editSource" />
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:0.5rem;">
+            <button class="btn-primary" onclick="saveEdit()">Save Changes →</button>
+            <button onclick="toggleEdit()" style="background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:10px 20px;font-size:12px;cursor:pointer;color:var(--text2);font-family:'DM Sans',sans-serif;">Cancel</button>
+          </div>
+          <p class="success-msg" id="editMsg"></p>
+        </div>
+      </div>
+
+      <!-- Update Status -->
+      <div class="detail-card">
+        <div class="detail-title" style="font-size:16px;margin-bottom:1rem;">Update Status</div>
+        <select class="status-select" id="statusSelect">
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="converted">Converted</option>
+        </select>
+        <button class="btn-primary" onclick="updateStatus()">Save Status →</button>
+        <p class="success-msg" id="statusMsg"></p>
+      </div>
+
+      <!-- Notes -->
+      <div class="detail-card">
+        <div class="detail-title" style="font-size:16px;margin-bottom:1rem;">Follow-up Notes</div>
+        <div class="notes-list" id="notesList"></div>
+        <textarea class="note-textarea" id="newNote" rows="3" placeholder="Add a follow-up note..."></textarea>
+        <button class="btn-primary" onclick="addNote()">Add Note →</button>
+      </div>
+
+    </div>
+  </div>
 
   <script src="js/lead-detail.js"></script>
 </body>

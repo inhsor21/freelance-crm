@@ -9,6 +9,11 @@ function logout() {
   window.location.href = 'index.html';
 }
 
+function toggleAddForm() {
+  const form = document.getElementById('addForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
 // Fetch and display analytics
 async function fetchAnalytics() {
   const res = await fetch(`${API}/leads/analytics`, {
@@ -19,7 +24,7 @@ async function fetchAnalytics() {
   document.getElementById('newLeads').textContent = data.newLeads;
   document.getElementById('contacted').textContent = data.contacted;
   document.getElementById('converted').textContent = data.converted;
-  document.getElementById('conversionRate').textContent = data.conversionRate;
+  document.getElementById('conversionRate').textContent = data.conversionRate + '% rate';
 }
 
 // Fetch and display leads
@@ -40,15 +45,26 @@ async function fetchLeads() {
   tbody.innerHTML = '';
 
   leads.forEach(lead => {
+    const initials = lead.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const avatarColors = {
+      new: 'background:#D8D0EE;color:#7B6BAF;',
+      contacted: 'background:#F0DFE7;color:#9A5068;',
+      converted: 'background:#DFF0DF;color:#4A7A4A;'
+    };
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${lead.name}</td>
+      <td>
+        <div class="name-cell">
+          <div class="avatar" style="${avatarColors[lead.status]}">${initials}</div>
+          ${lead.name}
+        </div>
+      </td>
       <td>${lead.email}</td>
-      <td>${lead.service || '-'}</td>
-      <td>${lead.source || '-'}</td>
-      <td>${lead.status}</td>
-      <td>${new Date(lead.createdAt).toLocaleDateString()}</td>
-      <td><a href="lead-detail.html?id=${lead._id}">View</a></td>
+      <td>${lead.service || '—'}</td>
+      <td>${lead.source || '—'}</td>
+      <td><span class="badge ${lead.status}">${lead.status}</span></td>
+      <td>${new Date(lead.createdAt).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })}</td>
+      <td><a class="view-link" href="lead-detail.html?id=${lead._id}">View →</a></td>
     `;
     tbody.appendChild(row);
   });
@@ -74,6 +90,7 @@ async function addLead() {
   });
 
   if (res.ok) {
+    document.getElementById('addForm').style.display = 'none';
     fetchLeads();
     fetchAnalytics();
   }
